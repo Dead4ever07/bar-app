@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   useNavigate,
-} from "react-router-dom"
-import { supabase } from "./supabaseClient"
-import "https://www.w3schools.com/w3css/5/w3.css"
-import Home from "./pages/home"
+} from "react-router-dom";
+import { supabase } from "./supabaseClient";
+import "./index.css";
+import Home from "./pages/home";
 
 function Login() {
   const [email, setEmail] = useState("")
