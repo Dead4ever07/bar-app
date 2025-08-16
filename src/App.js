@@ -1,7 +1,13 @@
-// App.js
 import { useState, useEffect } from "react"
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom"
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+} from "react-router-dom"
 import { supabase } from "./supabaseClient"
+import "https://www.w3schools.com/w3css/5/w3.css"
+import Home from "./pages/home"
 
 function Login() {
   const [email, setEmail] = useState("")
@@ -13,7 +19,7 @@ function Login() {
     e.preventDefault()
     setError("")
 
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     })
@@ -27,74 +33,44 @@ function Login() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-2xl mb-4">Login</h1>
-      <form onSubmit={handleLogin} className="flex flex-col gap-2 w-64">
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="border p-2 rounded"
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="border p-2 rounded"
-          required
-        />
-        <button
-          type="submit"
-          className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
-        >
-          Login
-        </button>
-        {error && <p className="text-red-500">{error}</p>}
-      </form>
+    <div className="w3-container w3-display-middle" style={{ maxWidth: "400px" }}>
+      <div className="w3-card w3-padding w3-round-large">
+        <h2 className="w3-center">Login</h2>
+        <form onSubmit={handleLogin} className="w3-container">
+          <p>
+            <input
+              className="w3-input w3-border w3-round"
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </p>
+          <p>
+            <input
+              className="w3-input w3-border w3-round"
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </p>
+          <button
+            type="submit"
+            className="w3-button w3-blue w3-round w3-block"
+          >
+            Login
+          </button>
+          {error && <p className="w3-text-red w3-center">{error}</p>}
+        </form>
+      </div>
     </div>
   )
 }
 
-function Home() {
-  const [user, setUser] = useState(null)
 
-  useEffect(() => {
-    const session = supabase.auth.getSession().then(({ data }) => {
-      setUser(data.session?.user ?? null)
-    })
-
-    // subscribe to auth changes
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null)
-    })
-
-    return () => {
-      listener.subscription.unsubscribe()
-    }
-  }, [])
-
-  if (!user) {
-    return <p className="p-4">Not logged in</p>
-  }
-
-  return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-2xl mb-4">Welcome, {user.email}!</h1>
-      <button
-        onClick={async () => {
-          await supabase.auth.signOut()
-          window.location.href = "/"
-        }}
-        className="bg-red-500 text-white p-2 rounded hover:bg-red-600"
-      >
-        Logout
-      </button>
-    </div>
-  )
-}
 
 function App() {
   return (
