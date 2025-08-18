@@ -12,7 +12,6 @@ function Home() {
       setUser(data.session?.user ?? null)
     })
 
-    // subscribe to auth changes
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null)
     })

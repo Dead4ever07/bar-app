@@ -7,8 +7,7 @@ import {
 } from "react-router-dom";
 import { supabase } from "./supabaseClient";
 import "./index.css";
-import Home from "./pages/home";
-
+import Menu from "./pages/Menu";
 function Login() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -77,7 +76,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/home" element={<Menu />} />
       </Routes>
     </Router>
   )
