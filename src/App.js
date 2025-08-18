@@ -32,8 +32,9 @@ function Login() {
   }
 
   return (
-    <div className="w3-container w3-display-middle" style={{ maxWidth: "400px" }}>
-      <div className="w3-card w3-padding w3-round-large">
+    <div className="w3-container w3-center" style={{ marginTop: "10vh" }}>
+      <div className="w3-card w3-padding w3-white w3-round-large"
+        style={{ maxWidth: "400px", margin: "auto" }}>
         <h2 className="w3-center">Login</h2>
         <form onSubmit={handleLogin} className="w3-container">
           <p>
