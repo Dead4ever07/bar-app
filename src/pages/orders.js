@@ -19,33 +19,55 @@ export default function Orders() {
           is_done,
           products (name)
          )
-        `).order("created_at", {ascending:false});
+        `).order("created_at", { ascending: false });
 
     if (!error) {
       const sorted = data.sort((a, b) => b.is_pending - a.is_pending);
-      setOrders(data);
+      setOrders(sorted);
     }
 
   }
+
   useEffect(() => {
-    fetchOrders()
-    const channel = supabase
+    // Initial fetch so you have some data before realtime kicks in
+    fetchOrders();
+
+    const ordersChannel = supabase
       .channel("orders-changes")
       .on(
         "postgres_changes",
-        { event: "*", schema: "public", table: "orders" },
+        { event: "INSERT", schema: "public", table: "orders" },
         (payload) => {
-          console.log("Change received!", payload)
-
-          fetchOrders()
+          console.log("New order!", payload);
+          setOrders(prev => [payload.new, ...prev]); // prepend new order
         }
       )
-      .subscribe()
+      .on(
+        "postgres_changes",
+        { event: "UPDATE", schema: "public", table: "orders" },
+        (payload) => {
+          console.log("Order updated!", payload);
+          setOrders(prev =>
+            prev.map(order =>
+              order.id === payload.new.id ? { ...order, ...payload.new } : order
+            )
+          );
+        }
+      )
+      .on(
+        "postgres_changes",
+        { event: "DELETE", schema: "public", table: "orders" },
+        (payload) => {
+          console.log("Order deleted!", payload);
+          setOrders(prev => prev.filter(order => order.id !== payload.old.id));
+        }
+      )
+      .subscribe();
 
     return () => {
-      supabase.removeChannel(channel)
-    }
-  }, [])
+      supabase.removeChannel(ordersChannel);
+    };
+  }, []);
 
   async function toggleItem(orderId, itemId, currentValue) {
     // Step 1: toggle the individual item
