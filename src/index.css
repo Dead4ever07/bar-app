@@ -2106,3 +2106,40 @@ w3-hover-cobalt:hover {
 .w3-hover-border-pale-blue:hover {
     border-color: #e7ffff !important
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.equal-height-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.equal-height-row > .equal-height-col {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px; /* spacing between rows */
+}
+
+.equal-height-col > .equal-height-card {
+  flex: 1; /* makes all cards stretch to equal height */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* optional: keeps buttons at bottom */
+}

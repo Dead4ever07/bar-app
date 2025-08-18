@@ -90,20 +90,23 @@ export default function Menu() {
                 {/* Product grid */}
                 <div className="w3-threequarter">
                     <h2>Products</h2>
-                    <div className="w3-row-padding">
+                    <div className="equal-height-row w3-row-padding">
                         {products.map((product) => (
-                            <div key={product.id} className="w3-col s6 m4 l4 w3-margin-bottom">
+                            <div key={product.id} className="equal-height-col w3-col s6 m4 l4">
                                 <div
-                                    className="w3-card w3-padding w3-hover-shadow"
+                                    className="equal-height-card w3-card w3-padding w3-hover-shadow"
                                     style={{ cursor: "pointer" }}
                                     onClick={() => addToCart(product)}
                                 >
                                     <h4>{product.name}</h4>
+                                    <p>{product.description}</p>
                                     <p>${product.price}</p>
+                                    {/* optional: button or footer */}
                                 </div>
                             </div>
                         ))}
                     </div>
+
 
                 </div>
 
