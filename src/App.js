@@ -8,6 +8,9 @@ import {
 import { supabase } from "./supabaseClient";
 import "./index.css";
 import Menu from "./pages/Menu";
+import Orders from "./pages/orders";
+
+
 function Login() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -77,7 +80,8 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/home" element={<Menu />} />
+        <Route path="/menu" element={<Menu />} />
+        <Route path="/orders" element={<Orders />} />
       </Routes>
     </Router>
   )
