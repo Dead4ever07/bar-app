@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { supabase } from "../supabaseClient"
+import Layout from "../components/Layout"
 
 export default function Orders() {
   const [orders, setOrders] = useState([])
@@ -47,34 +48,52 @@ export default function Orders() {
   }, [])
 
   async function toggleItem(orderId, itemId, currentValue) {
-    await supabase
+    // Step 1: toggle the individual item
+    const { error: itemError } = await supabase
       .from("order_items")
       .update({ is_done: !currentValue })
       .eq("id", itemId);
 
-    const { data: updatedOrder } = await supabase
+    if (itemError) {
+      console.error(itemError);
+      return;
+    }
+
+    // Step 2: fetch all items in this order to check overall status
+    const { data: orderItems, error: fetchError } = await supabase
       .from("order_items")
       .select("*")
       .eq("order_id", orderId);
 
-    const allDone = updatedOrder.every((i) => i.is_done);
-
-    if (allDone) {
-      await supabase.from("orders").update({ is_pending: false }).eq("id", orderId);
+    if (fetchError) {
+      console.error(fetchError);
+      return;
     }
 
+    // Step 3: determine if order should be pending
+    const allDone = orderItems.every((i) => i.is_done);
+
+    const { error: orderError } = await supabase
+      .from("orders")
+      .update({ is_pending: !allDone }) // true if at least one item is not done
+      .eq("id", orderId);
+
+    if (orderError) console.error(orderError);
+
+    // Step 4: refresh orders
     fetchOrders();
   }
 
 
 
+
   return (
-    <div className="w3-container">
+    <Layout>
       <h2>Orders</h2>
       {orders.map((order) => (
         <div
           key={order.id}
-          className={`w3-card w3-padding w3-margin-bottom ${order.is_pending ? "w3-pale-yellow" : "w3-light-grey"
+          className={`w3-card w3-padding w3-margin-bottom ${order.is_pending ? "" : "w3-light-grey"
             }`}
         >
           <h4>Order #{order.id}</h4>
@@ -93,7 +112,8 @@ export default function Orders() {
           </ul>
         </div>
       ))}
-    </div>
+    </Layout>
+
 
   )
 }
