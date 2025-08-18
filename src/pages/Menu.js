@@ -88,14 +88,16 @@ export default function Menu() {
                 <h2>Products</h2>
                 <div className="w3-row-padding">
                     {products.map((p) => (
-                        <div
-                            key={p.id}
-                            className="w3-card w3-padding w3-margin w3-hover-shadow"
-                            style={{ cursor: "pointer" }}
-                            onClick={() => addToCart(p)}
-                        >
-                            <h3>{p.name}</h3>
-                            <p>${p.price}</p>
+                        <div key={p.id} className="w3-third w3-margin-bottom">
+                            <div className="w3-card w3-padding w3-center"
+                                onClick={() => addToCart(p)}
+                            >
+                                {p.image_url && (
+                                    <img src={p.image_url} alt={p.name} style={{ width: "100%" }} />
+                                )}
+                                <h3>{p.name}</h3>
+                                <p>${p.price}</p>
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -109,13 +111,13 @@ export default function Menu() {
                         <li key={item.id}>
                             {item.name} — {item.quantity}
                             <button
-                                className="w3-button w3-small w3-red w3-margin-left"
+                                className="w3-button w3-small w3-red w3-right"
                                 onClick={() => removeFromCart(item.id)}
                             >
                                 X
                             </button>
                             <button
-                                className="w3-button w3-small w3-blue w3-margin-left"
+                                className="w3-button w3-small w3-blue w3-right"
                                 onClick={() => decreaseQuantity(item.id)}
                             >
                                 -
