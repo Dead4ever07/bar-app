@@ -19,7 +19,7 @@ export default function Orders() {
           is_done,
           products (name)
          )
-        `).order(created_at, {ascending:false});
+        `).order("created_at", {ascending:false});
 
     if (!error) {
       const sorted = data.sort((a, b) => b.is_pending - a.is_pending);
