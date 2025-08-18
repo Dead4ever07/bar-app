@@ -46,6 +46,8 @@ export default function Menu() {
         setCart((prevCart) => prevCart.filter((item) => item.id !== productId))
     }
 
+    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
+
     const handleCheckout = async () => {
         if (cart.length === 0) return
 
@@ -125,14 +127,19 @@ export default function Menu() {
                         </li>
                     ))}
                 </ul>
-                {cart.length > 0 && (
-                    <button
-                        onClick={handleCheckout}
-                        className="w3-button w3-blue w3-round w3-margin-top w3-block"
-                    >
-                        Buy
-                    </button>
-                )}
+                {/* Cart total */}
+                <div className="w3-padding w3-border-top w3-margin-top">
+                    <h4>Total: ${total.toFixed(2)}</h4>
+                </div>
+
+                {/* Buy button (disabled if cart empty) */}
+                <button
+                    className="w3-button w3-green w3-margin-top"
+                    disabled={cart.length === 0}
+                    onClick={handleCheckout}
+                >
+                    Buy
+                </button>
             </div>
         </div>
     )
