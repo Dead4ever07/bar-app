@@ -31,7 +31,7 @@ function Login() {
       return
     }
 
-    navigate("/home")
+    navigate("/menu")
   }
 
   return (
