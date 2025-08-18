@@ -28,8 +28,22 @@ export default function Menu() {
         })
     }
 
-    const removeFromCart = (id) => {
-        setCart((prev) => prev.filter((item) => item.id !== id))
+    // Decrease quantity by 1
+    const decreaseQuantity = (productId) => {
+        setCart((prevCart) =>
+            prevCart
+                .map((item) =>
+                    item.id === productId
+                        ? { ...item, quantity: item.quantity - 1 }
+                        : item
+                )
+                .filter((item) => item.quantity > 0) // remove if quantity hits 0
+        )
+    }
+
+    // Remove all of a product
+    const removeFromCart = (productId) => {
+        setCart((prevCart) => prevCart.filter((item) => item.id !== productId))
     }
 
     const handleCheckout = async () => {
@@ -74,20 +88,14 @@ export default function Menu() {
                 <h2>Products</h2>
                 <div className="w3-row-padding">
                     {products.map((p) => (
-                        <div key={p.id} className="w3-third w3-margin-bottom">
-                            <div className="w3-card w3-padding w3-center">
-                                {p.image_url && (
-                                    <img src={p.image_url} alt={p.name} style={{ width: "100%" }} />
-                                )}
-                                <h3>{p.name}</h3>
-                                <p>${p.price}</p>
-                                <button
-                                    className="w3-button w3-green w3-round"
-                                    onClick={() => addToCart(p)}
-                                >
-                                    Add to cart
-                                </button>
-                            </div>
+                        <div
+                            key={p.id}
+                            className="w3-card w3-padding w3-margin w3-hover-shadow"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => addToCart(p)}
+                        >
+                            <h3>{p.name}</h3>
+                            <p>${p.price}</p>
                         </div>
                     ))}
                 </div>
@@ -96,17 +104,21 @@ export default function Menu() {
             {/* Cart sidebar */}
             <div className="w3-quarter">
                 <h2>Your Cart</h2>
-                <ul className="w3-ul w3-border">
+                <ul className="w3-ul">
                     {cart.map((item) => (
-                        <li key={item.id} className="w3-bar">
-                            <div className="w3-bar-item">
-                                {item.name} x {item.quantity}
-                            </div>
+                        <li key={item.id}>
+                            {item.name} — {item.quantity}
                             <button
-                                className="w3-button w3-small w3-red w3-right"
+                                className="w3-button w3-small w3-red w3-margin-left"
                                 onClick={() => removeFromCart(item.id)}
                             >
                                 X
+                            </button>
+                            <button
+                                className="w3-button w3-small w3-blue w3-margin-left"
+                                onClick={() => decreaseQuantity(item.id)}
+                            >
+                                -
                             </button>
                         </li>
                     ))}
