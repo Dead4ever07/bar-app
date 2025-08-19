@@ -33,33 +33,20 @@ export default function Orders() {
   useEffect(() => {
     fetchOrders();
 
-    const ordersChannel = supabase
-      .channel("orders-changes")
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "orders" },
-        (payload) => {
-          console.log("New order!", payload);
-          setOrders(prev => [payload.new, ...prev]);
-        }
-      )
-      .subscribe();
+    const broadcastChannel = supabase
+      .channel("orders-broadcast")
+      .on("broadcast", { event: "new-order" }, (payload) => {
+        console.log("Broadcast received!", payload)
+        const newOrder = payload.payload
 
-
-const broadcastChannel = supabase
-  .channel("orders-broadcast")
-  .on("broadcast", { event: "new_order" }, (payload) => {
-    console.log("Broadcast received!", payload)
-    const newOrder = payload.payload
-
-    setOrders((prev) => {
-      const updated = [newOrder, ...prev]
-      return updated.sort((a, b) => b.is_pending - a.is_pending)
-    })
-  })
-  .subscribe((status) => {
-    console.log("Subscription status:", status)
-  })
+        setOrders((prev) => {
+          const updated = [newOrder, ...prev]
+          return updated.sort((a, b) => b.is_pending - a.is_pending)
+        })
+      })
+      .subscribe((status) => {
+        console.log("Subscription status:", status)
+      })
 
 
 
