@@ -23,7 +23,7 @@ export default function Orders() {
 
     if (!error) {
       setOrders(
-        updated.sort((a, b) => b.is_pending - a.is_pending)
+        data.sort((a, b) => b.is_pending - a.is_pending)
       )
     }
 
