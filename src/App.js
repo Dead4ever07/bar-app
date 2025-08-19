@@ -8,7 +8,7 @@ import {
 import { supabase } from "./supabaseClient";
 import "./index.css";
 import Menu from "./pages/Menu";
-import Orders from "./pages/orders";
+import Orders from "./pages/Orders";
 
 
 function Login() {

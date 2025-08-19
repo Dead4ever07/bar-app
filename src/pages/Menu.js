@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
 import "../index.css";
-import Layout from "../components/Layout";
+import Layout from "../components/OrdersLayout";
 
 export default function Menu() {
     const [products, setProducts] = useState([])

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Layout from "@/components/Layout";
-import { supabase } from "../supabaseClient";
-import "../index.css";
+import { supabase } from "../../supabaseClient";
+import "../../index.css";
 
 
 function Home() {

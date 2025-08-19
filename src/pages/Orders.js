@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { supabase } from "../supabaseClient"
-import Layout from "../components/Layout"
+import Layout from "../components/OrdersLayout"
 
 export default function Orders() {
   const [orders, setOrders] = useState([])
@@ -67,7 +67,6 @@ export default function Orders() {
       return;
     }
 
-    // Step 2: fetch all items in this order to check overall status
     const { data: orderItems, error: fetchError } = await supabase
       .from("order_items")
       .select("*")
@@ -78,18 +77,15 @@ export default function Orders() {
       return;
     }
 
-    // Step 3: determine if order should be pending
     const allDone = orderItems.every((i) => i.is_done);
 
     const { error: orderError } = await supabase
       .from("orders")
-      .update({ is_pending: !allDone }) // true if at least one item is not done
+      .update({ is_pending: !allDone })
       .eq("id", orderId);
 
     if (orderError) console.error(orderError);
 
-    // Step 4: refresh orders
-    fetchOrders();
   }
 
 
