@@ -103,7 +103,7 @@ export default function Menu() {
         };
 
         // 4. Broadcast to channel
-        supabase.channel("orders-changes").send({
+        supabase.channel("orders-broadcast").send({
             type: "broadcast",
             event: "new-order",
             payload: broadcastPayload,
