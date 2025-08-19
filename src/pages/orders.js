@@ -52,7 +52,7 @@ export default function Orders() {
 
 
     return () => {
-      supabase.removeChannel(ordersChannel);
+      supabase.removeChannel(broadcastChannel);
     };
   }, []);
 
