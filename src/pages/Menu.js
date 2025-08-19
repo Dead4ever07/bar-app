@@ -49,49 +49,71 @@ export default function Menu() {
 
     const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
-    
-    
+
+
     const handleCheckout = async () => {
-        if (cart.length === 0) return
-        
+        if (cart.length === 0) return;
+
+        // 1. Insert order row
         const { data: order, error: orderError } = await supabase
-        .from("orders")
-        .insert([{ is_pending: true }])
-        .select()
-        .single()
-        
+            .from("orders")
+            .insert([{ is_pending: true }])
+            .select()
+            .single();
+
         if (orderError) {
-            console.error(orderError)
-            return
+            console.error(orderError);
+            return;
         }
-        
+
+        // 2. Insert order items
         const items = cart.map((item) => ({
             order_id: order.id,
             product_id: item.id,
             quantity: item.quantity,
-        }))
-        
-        const { error: itemsError } = await supabase
-        .from("order_items")
-        .insert(items)
-        
-        if (itemsError) {
-            console.error(itemsError)
-            return
-        }
-        
-        supabase.channel("orders-broadcast").send({
-            type: "broadcast",
-            event: "new_order",
-            payload: {
-                new: order,
-                items: items
-            }
-        })
+        }));
 
-        alert("Order created successfully!")
-        setCart([])
-    }
+        const { data: insertedItems, error: itemsError } = await supabase
+            .from("order_items")
+            .insert(items)
+            .select()
+            .eq("order_id", order.id); // 👈 filter by the last order
+
+
+        if (itemsError) {
+            console.error(itemsError);
+            return;
+        }
+
+        // 3. Build broadcast payload (without extra queries)
+        const broadcastPayload = {
+            id: order.id,
+            is_pending: order.is_pending,
+            created_at: order.created_at,
+            order_items: insertedItems.map((inserted) => {
+                const cartItem = cart.find((c) => c.id === inserted.product_id);
+                return {
+                    id: inserted.id,
+                    is_done: inserted.is_done, // should default from DB
+                    products: { name: cartItem?.name || "" },
+                    quantity: inserted.quantity,
+                    product_id: inserted.product_id,
+                };
+            }),
+        };
+
+        // 4. Broadcast to channel
+        supabase.channel("orders-changes").send({
+            type: "broadcast",
+            event: "new-order",
+            payload: broadcastPayload,
+        });
+
+        // 5. Reset cart
+        alert("Order created successfully!");
+        setCart([]);
+    };
+
 
     return (
         <Layout>
