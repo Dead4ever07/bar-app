@@ -50,13 +50,18 @@ export default function Orders() {
       .channel("orders-broadcast")
       .on("broadcast", { event: "new_order" }, (payload) => {
         console.log("Broadcast received!", payload)
-        setOrders(prev => {
-          const updated = [payload.payload.new, ...prev];
 
+        // payload.payload contains your full order object
+        const newOrder = payload.payload;
+
+        setOrders((prev) => {
+          const updated = [newOrder, ...prev];
           return updated.sort((a, b) => b.is_pending - a.is_pending);
         });
       })
       .subscribe();
+
+
 
     return () => {
       supabase.removeChannel(ordersChannel);
