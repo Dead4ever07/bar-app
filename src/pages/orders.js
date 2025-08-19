@@ -22,46 +22,40 @@ export default function Orders() {
         `).order("created_at", { ascending: false });
 
     if (!error) {
-      const sorted = data.sort((a, b) => b.is_pending - a.is_pending);
-      setOrders(sorted);
+      setOrders(
+        updated.sort((a, b) => b.is_pending - a.is_pending)
+      )
     }
 
   }
 
+
   useEffect(() => {
-    // Initial fetch so you have some data before realtime kicks in
     fetchOrders();
 
     const ordersChannel = supabase
       .channel("orders-changes")
       .on(
         "postgres_changes",
-        { event: "INSERT", schema: "public", table: "orders" },
+        { event: "*", schema: "public", table: "orders" },
         (payload) => {
           console.log("New order!", payload);
-          setOrders(prev => [payload.new, ...prev]); // prepend new order
+          setOrders(prev => [payload.new, ...prev]);
         }
       )
-      .on(
-        "postgres_changes",
-        { event: "UPDATE", schema: "public", table: "orders" },
-        (payload) => {
-          console.log("Order updated!", payload);
-          setOrders(prev =>
-            prev.map(order =>
-              order.id === payload.new.id ? { ...order, ...payload.new } : order
-            )
-          );
-        }
-      )
-      .on(
-        "postgres_changes",
-        { event: "DELETE", schema: "public", table: "orders" },
-        (payload) => {
-          console.log("Order deleted!", payload);
-          setOrders(prev => prev.filter(order => order.id !== payload.old.id));
-        }
-      )
+      .subscribe();
+
+
+    const broadcastChannel = supabase
+      .channel("orders-broadcast")
+      .on("broadcast", { event: "new_order" }, (payload) => {
+        console.log("Broadcast received!", payload)
+        setOrders(prev => {
+          const updated = [payload.payload.new, ...prev];
+
+          return updated.sort((a, b) => b.is_pending - a.is_pending);
+        });
+      })
       .subscribe();
 
     return () => {
@@ -70,7 +64,6 @@ export default function Orders() {
   }, []);
 
   async function toggleItem(orderId, itemId, currentValue) {
-    // Step 1: toggle the individual item
     const { error: itemError } = await supabase
       .from("order_items")
       .update({ is_done: !currentValue })

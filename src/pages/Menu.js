@@ -49,39 +49,48 @@ export default function Menu() {
 
     const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
+    
+    
     const handleCheckout = async () => {
         if (cart.length === 0) return
-
-        // 1. Create order
+        
         const { data: order, error: orderError } = await supabase
-            .from("orders")
-            .insert([{ is_pending: true }])
-            .select()
-            .single()
-
+        .from("orders")
+        .insert([{ is_pending: true }])
+        .select()
+        .single()
+        
         if (orderError) {
             console.error(orderError)
             return
         }
-
-        // 2. Insert order items
+        
         const items = cart.map((item) => ({
             order_id: order.id,
             product_id: item.id,
             quantity: item.quantity,
         }))
-
+        
         const { error: itemsError } = await supabase
-            .from("order_items")
-            .insert(items)
-
+        .from("order_items")
+        .insert(items)
+        
         if (itemsError) {
             console.error(itemsError)
             return
         }
+        
+        supabase.channel("orders-broadcast").send({
+            type: "broadcast",
+            event: "new_order",
+            payload: {
+                new: order,
+                items: items
+            }
+        })
 
         alert("Order created successfully!")
-        setCart([]) // reset cart
+        setCart([])
     }
 
     return (
