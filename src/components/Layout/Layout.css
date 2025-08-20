@@ -1,0 +1,100 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+
+.navbar {
+  display: flex;
+  width: 100%;
+  z-index: 1000;
+  position: fixed;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1f1f1f;
+  padding: 0.75rem 1.5rem;
+  color: white;
+}
+
+.navbar-icon img {
+  height: 32px;
+  width: 32px;
+}
+
+.navbar-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-btn {
+  background-color: #111111;
+  border: 1px solid #DDDDDD;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #DDDDDD;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  margin: 0;
+  outline: none;
+  padding: 13px 23px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  touch-action: manipulation;
+  transition: box-shadow .2s, -ms-transform .1s, -webkit-transform .1s, transform .1s;
+  user-select: none;
+  -webkit-user-select: none;
+  width: auto;
+}
+
+.nav-btn:focus-visible {
+  box-shadow: #DDDDDD 0 0 0 2px, rgba(255, 255, 255, 0.8) 0 0 0 4px;
+  transition: box-shadow .2s;
+}
+
+.nav-btn:active {
+  background-color: #191919;
+  border-color: #FFFFFF;
+  transform: scale(.96);
+}
+
+.nav-btn:disabled {
+  border-color: #222222;
+  color: #222222;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+}
+
+.footer {
+  background-color: #1f1f1f;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+}
