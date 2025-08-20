@@ -1,13 +1,29 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
+import { useNavigate } from "react-router-dom";
 import "../index.css";
-import Layout from "../components/OrdersLayout";
+import OrdersLayout from "../components/OrdersLayout";
 
 export default function Menu() {
     const [products, setProducts] = useState([])
     const [cart, setCart] = useState([])
-
+    const navigate = useNavigate();
+    
     useEffect(() => {
+        
+        const checkUser = async () => {
+            const {
+                data: { user },
+            } = await supabase.auth.getUser();
+
+            if (!user) {
+                navigate("/login"); // redirect to login if not logged in
+            }
+        };
+
+        checkUser();
+
+
         const fetchProducts = async () => {
             const { data, error } = await supabase.from("products").select("*")
             if (!error) setProducts(data)
@@ -116,7 +132,7 @@ export default function Menu() {
 
 
     return (
-        <Layout>
+        <OrdersLayout>
             <div className="w3-row-padding">
                 {/* Product grid */}
                 <div className="w3-threequarter">
@@ -178,6 +194,6 @@ export default function Menu() {
                     </button>
                 </div>
             </div>
-        </Layout>
+        </OrdersLayout>
     )
 }

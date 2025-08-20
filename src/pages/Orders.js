@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
 import { supabase } from "../supabaseClient"
-import Layout from "../components/OrdersLayout"
+import OrdersLayout from "../components/OrdersLayout"
+import { useNavigate } from "react-router-dom";
 
 export default function Orders() {
   const [orders, setOrders] = useState([])
-
+  const navigate = useNavigate();
+  
   const fetchOrders = async () => {
     let { data, error } = await supabase
       .from("orders")
@@ -31,6 +33,19 @@ export default function Orders() {
 
 
   useEffect(() => {
+
+    const checkUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) {
+        navigate("/login"); // redirect to login if not logged in
+      }
+    };
+
+    checkUser();
+
     fetchOrders();
 
     const broadcastChannel = supabase
@@ -92,7 +107,7 @@ export default function Orders() {
 
 
   return (
-    <Layout>
+    <OrdersLayout>
       <h2>Orders</h2>
       {orders.map((order) => (
         <div
@@ -116,7 +131,7 @@ export default function Orders() {
           </ul>
         </div>
       ))}
-    </Layout>
+    </OrdersLayout>
 
 
   )

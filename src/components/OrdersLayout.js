@@ -1,5 +1,5 @@
 
-export default function Layout({ children }) {
+export default function OrdersLayout({ children }) {
   return (
     <div className="w3-row">
       {/* Sidebar for desktop */}
