@@ -10,6 +10,8 @@ import "./index.css";
 import Menu from "./pages/Menu";
 import Orders from "./pages/Orders";
 import Login from "./pages/Login";
+import Layout from "./components/Layout/Layout";
+import Home from "./page/Home";
 
 
 
