@@ -1,10 +1,16 @@
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  useNavigate,
+} from "react-router-dom";
+import { supabase } from "../../supabaseClient";
 import './Layout.css';
 
 const Navbar = () => {
 
     let user;
-
+    const navigate = useNavigate();
     const handleLogout = async () => {
         const { error } = await supabase.auth.signOut();
 
