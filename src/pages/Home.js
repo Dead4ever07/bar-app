@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-
-import { supabase } from "../../supabaseClient";
+import Carrossel from "../components/Home/Carousel";
 import "../../index.css";
 
 
@@ -13,7 +12,7 @@ function Home() {
 
 
   return (
-    <h1>Home Page Test</h1>
+    <Carrossel/>
   )
 }
 

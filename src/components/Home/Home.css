@@ -1,0 +1,25 @@
+.arrow {
+  width: 30px;
+  height: 30px;
+  border-left: 4px solid white;
+  border-bottom: 4px solid white;
+  transform: rotate(-45deg);
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.bounce {
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: rotate(-45deg) translateY(0);
+  }
+  40% {
+    transform: rotate(-45deg) translateY(10px);
+  }
+  60% {
+    transform: rotate(-45deg) translateY(5px);
+  }
+}
