@@ -13,30 +13,39 @@
 }
 
 @keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
+
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
     transform: rotate(-45deg) translateY(0);
   }
+
   40% {
     transform: rotate(-45deg) translateY(10px);
   }
+
   60% {
     transform: rotate(-45deg) translateY(5px);
   }
 }
 
 .w3-padding-top-custom {
-  padding: 40px 16px 0 16px; /* top, right, bottom, left */
+  padding: 40px 16px 0 16px;
+  /* top, right, bottom, left */
 }
-
 
 /* Force all images to same height (square) */
 .team-image-container {
   width: 100%;
-  padding-top: 100%; /* 1:1 aspect ratio */
+  padding-top: 100%;
+  /* 1:1 aspect ratio */
   position: relative;
   overflow: hidden;
   border-radius: 8px;
-  margin-bottom: 12px; /* space between image and name */
+  margin-bottom: 12px;
+  /* space between image and name */
 }
 
 .team-image {
@@ -56,12 +65,11 @@
   margin-bottom: 24px;
 }
 
-/* Home.css */
-
 .w3-row-padding {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px; /* optional spacing instead of relying only on w3-row-padding */
+  gap: 16px;
+  /* optional spacing instead of relying only on w3-row-padding */
 }
 
 .w3-col {
@@ -69,8 +77,19 @@
 }
 
 .team-card {
+  padding-top: 16px;
+  /* matches side padding */
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* keep content aligned */
+  justify-content: space-between;
+  /* keep content aligned */
 }
+
+.w3-row-padding {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  justify-content: center; /* center last row */
+}
+
