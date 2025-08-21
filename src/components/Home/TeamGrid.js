@@ -19,7 +19,7 @@ import members from "./Members";
  */
 
 export function TeamGrid() {
-return (
+  return (
     <div className="team-section w3-margin-top-custom">
       {/* Section Title */}
       <h2 className="w3-center w3-margin-bottom">Membros</h2>
@@ -29,16 +29,22 @@ return (
         {members.map((member, index) => (
           <div key={index} className="w3-col l3 m4 s6 w3-margin-bottom">
             <div className="w3-card w3-round w3-white team-card">
-              <div className="w3-container">
-                <div className="team-image-container">
-                  <img
-                    src={member.photo}
-                    alt={member.name}
-                    className="team-image"
-                  />
+              <div className="w3-display-container">
+                {/* Image */}
+                <img
+                  src={member.photo}
+                  alt={member.name}
+                  className="team-image"
+                  style={{ width: "100%" }}
+                />
+
+                {/* Overlay Text */}
+                <div className="w3-display-bottommiddle w3-container w3-black w3-opacity-min w3-round-small">
+                  <h3 className="w3-text-white">{member.name}</h3>
+                  {member.role && (
+                    <p className="w3-small w3-text-grey">{member.role}</p>
+                  )}
                 </div>
-                <h3>{member.name}</h3>
-                {member.role && <p className="w3-opacity">{member.role}</p>}
               </div>
             </div>
           </div>
