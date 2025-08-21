@@ -66,9 +66,13 @@ function Carrossel() {
             className="w3-display-middle"
             style={{ whiteSpace: "nowrap" }}
           >
-            <span className="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity" style={{ whiteSpace: "normal", wordBreak: "break-word" }}>
+            <span
+              className="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity"
+              style={{ display: "inline-block", whiteSpace: "normal", wordBreak: "break-word" }}
+            >
               Comissão de Festas S.Sebastião '05
             </span>
+
           </div>
         </div>
       ))}
