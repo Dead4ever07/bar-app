@@ -24,16 +24,14 @@
   }
 }
 
-
-/* Add spacing between this grid and previous elements */
-.w3-margin-top-custom {
-  margin-top: 40px;
+.w3-padding-top-custom {
+  padding: 40px 16px 0 16px; /* top, right, bottom, left */
 }
 
-/* Force all images to the same height with object-fit */
+/* Force all images to the same height (square) */
 .team-image-container {
   width: 100%;
-  padding-top: 100%; /* 1:1 aspect ratio for square */
+  padding-top: 100%; /* 1:1 aspect ratio */
   position: relative;
   overflow: hidden;
   border-radius: 8px;
@@ -48,7 +46,9 @@
   object-fit: cover;
 }
 
+/* Optional: title styling */
 .team-section h2 {
   font-weight: bold;
   font-size: 2rem;
+  margin-bottom: 24px;
 }
