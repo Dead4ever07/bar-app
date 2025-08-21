@@ -41,7 +41,7 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <div className="navbar-icon .w3-round-medium">
+      <div className="navbar-icon w3-round-xxlarge">
         <img src="./favicon.jpeg" alt="App Icon" />
       </div>
       <div className="navbar-buttons">

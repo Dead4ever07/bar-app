@@ -9,19 +9,6 @@ import { TeamGrid } from "../components/Home/TeamGrid";
 
 function Home() {
   const [user, setUser] = useState(null)
-  const names = [
-    "Joana",
-    "Gonçalo",
-    "Margarida",
-    "Beatriz Carvalho",
-    "Inês Vilaça",
-    "Luís",
-  ]
-  
-  const members = names.map(([name])=>({
-    name,
-    photo: `../../`
-  }));
 
   useEffect(() => {
 
