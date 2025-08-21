@@ -11,7 +11,7 @@ function importAll(r) {
 
     return {
       name,
-      role: "Team Member", // default role (you can customize later)
+      role: "", // default role (you can customize later)
       photo: r(file),
     };
   });
