@@ -28,7 +28,7 @@ return (
       <div className="equal-height-row w3-row-padding w3-center">
         {members.map((member, index) => (
           <div key={index} className="equal-height-col w3-col l3 m4 s6 w3-margin-bottom">
-            <div className="w3-card w3-round w3-white"  style={{padingTop:"16px"}}>
+            <div className="w3-card w3-round w3-white team-card">
               <div className="w3-container">
                 <div className="team-image-container">
                   <img
