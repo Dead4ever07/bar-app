@@ -19,26 +19,31 @@ import members from "./Members";
  */
 
 export function TeamGrid() {
-  return (
-    <section className="w3-container w3-margin-top">
+return (
+    <div className="team-section w3-margin-top-custom">
+      {/* Section Title */}
       <h2 className="w3-center w3-margin-bottom">Membros</h2>
 
-      <div className="w3-row-padding">
+      {/* Grid */}
+      <div className="w3-row-padding w3-center">
         {members.map((member, index) => (
           <div key={index} className="w3-col l3 m4 s6 w3-margin-bottom">
-            <div className="w3-card w3-round w3-white w3-center">
-              <img
-                src={member.photo}
-                alt={member.name}
-                className="w3-image"
-                style={{ borderRadius: "8px", height: "250px", objectFit: "cover" }}
-              />
-              <h3>{member.name}</h3>
-              {member.role && <p className="w3-opacity">{member.role}</p>}
+            <div className="w3-card w3-round w3-white team-card">
+              <div className="w3-container">
+                <div className="team-image-container">
+                  <img
+                    src={member.photo}
+                    alt={member.name}
+                    className="team-image"
+                  />
+                </div>
+                <h3>{member.name}</h3>
+                {member.role && <p className="w3-opacity">{member.role}</p>}
+              </div>
             </div>
           </div>
         ))}
       </div>
-    </section>
+    </div>
   );
 }
