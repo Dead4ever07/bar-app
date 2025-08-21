@@ -67,7 +67,7 @@ function Carrossel() {
             style={{ whiteSpace: "nowrap" }}
           >
             <span className="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">
-              Sharp & Classic
+              Comissão de Festas S.Sebastião '05
             </span>
           </div>
         </div>
