@@ -28,10 +28,6 @@
   padding: 40px 16px 0 16px; /* top, right, bottom, left */
 }
 
-/* Add inner spacing at the top of the card */
-.team-card {
-  padding-top: 16px; /* matches side padding */
-}
 
 /* Force all images to same height (square) */
 .team-image-container {
@@ -58,4 +54,23 @@
   font-weight: bold;
   font-size: 2rem;
   margin-bottom: 24px;
+}
+
+/* Home.css */
+
+.w3-row-padding {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px; /* optional spacing instead of relying only on w3-row-padding */
+}
+
+.w3-col {
+  display: flex;
+}
+
+.team-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* keep content aligned */
 }
