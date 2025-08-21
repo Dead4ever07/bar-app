@@ -1,5 +1,6 @@
 import React from "react";
 import "../../index.css";
+import "./Home.css";
 import members from "./Members";
 /**
  * TeamGrid Component
@@ -19,17 +20,18 @@ import members from "./Members";
 
 export function TeamGrid() {
   return (
-    <div className="w3-row-padding w3-center">
+    <div className="w3-row-padding w3-center w3-margin-top-custom">
       {members.map((member, index) => (
         <div key={index} className="w3-col l3 m4 s6 w3-margin-bottom">
           <div className="w3-card w3-round w3-white">
             <div className="w3-container">
-              <img
-                src={member.photo}
-                alt={member.name}
-                className="w3-image"
-                style={{ width: "100%", height: "auto", borderRadius: "8px" }}
-              />
+              <div className="team-image-container">
+                <img
+                  src={member.photo}
+                  alt={member.name}
+                  className="team-image"
+                />
+              </div>
               <h3>{member.name}</h3>
               {member.role && <p className="w3-opacity">{member.role}</p>}
             </div>
