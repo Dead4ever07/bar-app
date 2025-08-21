@@ -31,7 +31,12 @@
 /* Add inner spacing at the top of the card */
 .team-card {
   padding-top: 16px; /* matches side padding */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
 }
+
 
 /* Force all images to same height (square) */
 .team-image-container {
