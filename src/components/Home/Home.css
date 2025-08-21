@@ -28,13 +28,19 @@
   padding: 40px 16px 0 16px; /* top, right, bottom, left */
 }
 
-/* Force all images to the same height (square) */
+/* Add inner spacing at the top of the card */
+.team-card {
+  padding-top: 16px; /* matches side padding */
+}
+
+/* Force all images to same height (square) */
 .team-image-container {
   width: 100%;
   padding-top: 100%; /* 1:1 aspect ratio */
   position: relative;
   overflow: hidden;
   border-radius: 8px;
+  margin-bottom: 12px; /* space between image and name */
 }
 
 .team-image {
@@ -45,6 +51,7 @@
   height: 100%;
   object-fit: cover;
 }
+
 
 /* Optional: title styling */
 .team-section h2 {

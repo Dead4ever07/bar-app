@@ -19,7 +19,7 @@ import members from "./Members";
  */
 
 export function TeamGrid() {
-  return (
+return (
     <div className="team-section w3-margin-top-custom">
       {/* Section Title */}
       <h2 className="w3-center w3-margin-bottom">Membros</h2>
@@ -28,7 +28,7 @@ export function TeamGrid() {
       <div className="w3-row-padding w3-center">
         {members.map((member, index) => (
           <div key={index} className="w3-col l3 m4 s6 w3-margin-bottom">
-            <div className="w3-card w3-round w3-white">
+            <div className="w3-card w3-round w3-white team-card">
               <div className="w3-container">
                 <div className="team-image-container">
                   <img
