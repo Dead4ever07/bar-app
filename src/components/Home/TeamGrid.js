@@ -70,7 +70,7 @@ function Avatar({ name, src }) {
   return (
     <div className="w-full aspect-square rounded-xl overflow-hidden bg-white/10 flex items-center justify-center">
       {src ? (
-        // eslint-disable-next-line @next/next/no-img-element
+        
         <img
           src={src}
           alt={name}
