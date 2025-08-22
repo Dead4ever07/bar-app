@@ -2,41 +2,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { supabase } from "../../supabaseClient";
 import "./Layout.css";
+import useLogout from "../../controllers/Logout"
+import useAuthUser from "../../controllers/CheckLogin"
 
-const Navbar = () => {
-  const [user, setUser] = useState(null); // ✅ track user with state
-  const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    const { error } = await supabase.auth.signOut();
-
-    if (error) {
-      console.error("Logout error:", error.message);
-    } else {
-      setUser(null);
-      navigate("/");
-    }
-  };
-
+const Navbar = () => {  
+  const handleLogout = useLogout();
   useEffect(() => {
-    const checkUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      setUser(user);
-    };
-
-    checkUser();
-
-    const { data: subscription } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        setUser(session?.user ?? null);
-      }
-    );
-
-    return () => {
-      subscription.subscription.unsubscribe();
-    };
+    const user = useAuthUser();
   }, []);
 
   return (
