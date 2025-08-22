@@ -93,7 +93,7 @@ export default function Menu() {
             .from("order_items")
             .insert(items)
             .select()
-            .eq("order_id", order.id); // 👈 filter by the last order
+            .eq("order_id", order.id);
 
 
         if (itemsError) {

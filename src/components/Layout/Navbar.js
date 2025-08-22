@@ -2,8 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { supabase } from "../../supabaseClient";
 import "./Layout.css";
-import useLogout from "../../controllers/Logout"
-import useAuthUser from "../../controllers/CheckLogin"
+import {useLogout, useAuthUser} from "../../controllers/Logout"
 
 const Navbar = () => {  
   const handleLogout = useLogout();
