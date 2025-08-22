@@ -6,8 +6,8 @@ import {useLogout, useAuthUser} from "../../controllers/Logout"
 
 const Navbar = () => {  
   const handleLogout = useLogout();
+  const user = useAuthUser();
   useEffect(() => {
-    const user = useAuthUser();
   }, []);
 
   return (
